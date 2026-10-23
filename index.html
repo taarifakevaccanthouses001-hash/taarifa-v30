@@ -1,21 +1,58 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script><style>*{box-sizing:border-box;font-family:system-ui}body{background:#0f172a;color:white;margin:0;padding:10px}.header{background:#1e293b;padding:15px;border-radius:12px;text-align:center;font-weight:bold;font-size:20px;margin-bottom:15px}.card{background:#1e293b;padding:20px;border-radius:12px}.input{width:100%;padding:12px;border-radius:8px;border:none;margin:8px 0;background:#334155;color:white}.btn{width:100%;padding:14px;background:#2563eb;color:white;border:none;border-radius:8px;font-weight:bold}</style></head><body><div class="header"><b>TAARIFA KE V30</b> WORKING NOW</div><div class="card"><input id="email" class="input" placeholder="Your Gmail"><button class="btn" onclick="sendOTP()">Send OTP Email</button><div id="otpbox" style="display:none;margin-top:15px"><input id="otpinput" class="input" placeholder="Enter OTP shown below"><button class="btn" onclick="verifyOTP()">Verify OTP</button></div><p id="status" style="color:#38bdf8"></p><p id="otpdisplay" style="font-size:24px;font-weight:bold;color:#facc15"></p></div><script>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+*{box-sizing:border-box;font-family:system-ui}
+body{background:#0f172a;color:white;margin:0;padding:10px}
+.header{background:#1e293b;padding:15px;border-radius:12px;text-align:center;font-weight:bold;font-size:20px;margin-bottom:15px}
+.card{background:#1e293b;padding:20px;border-radius:12px}
+.input{width:100%;padding:12px;border-radius:8px;border:none;margin:8px 0;background:#334155;color:white}
+.btn{width:100%;padding:14px;background:#2563eb;color:white;border:none;border-radius:8px;font-weight:bold;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="header">TAARIFA KE V30 - WORKING NOW</div>
+<div class="card">
+<input id="email" class="input" placeholder="Your Gmail">
+<button class="btn" onclick="sendOTP()">Send OTP Email</button>
+<div id="otpbox" style="display:none;margin-top:15px">
+<input id="otpinput" class="input" placeholder="Enter OTP shown below">
+<button class="btn" onclick="verifyOTP()">Verify OTP</button>
+</div>
+<p id="status" style="color:#38bdf8"></p>
+<p id="otpdisplay" style="font-size:24px;font-weight:bold;color:#facc15;text-align:center"></p>
+</div>
+<script>
 emailjs.init("dDRA4DNT5-alpA2nX");
 let otp="";
 function sendOTP(){
-let e=document.getElementById('email').value;
-if(!e.includes('@')){alert('Enter valid Gmail');return;}
-otp=Math.floor(100000+Math.random()*900000).toString();
-document.getElementById('status').innerText="Trying to send to "+e+"...";
-emailjs.send("service_42394835","template_gosif3q",{to_email:e,email:e,otp:otp,otp_code:otp,passcode:otp}).then(function(){
- document.getElementById('status').innerText="✅ Email sent to "+e+"! Check inbox";
- document.getElementById('otpdisplay').innerText="OTP: "+otp+" (also in email)";
- document.getElementById('otpbox').style.display="block";
-},function(err){
- document.getElementById('status').innerText="EmailJS 404 (ID mismatch) - Using local OTP mode";
- document.getElementById('otpdisplay').innerText="YOUR OTP IS: "+otp;
- document.getElementById('otpbox').style.display="block";
- console.log(JSON.stringify(err));
-});
+ let e=document.getElementById('email').value;
+ if(!e.includes('@')){alert('Enter Gmail');return;}
+ otp=Math.floor(100000+Math.random()*900000).toString();
+ document.getElementById('status').innerText="Trying to send to "+e+"...";
+ emailjs.send("service_42394835","template_gosif3q",{to_email:e,email:e,otp:otp,otp_code:otp,passcode:otp}).then(function(){
+   document.getElementById('status').innerText="✅ Email sent to "+e;
+   document.getElementById('otpdisplay').innerText="OTP: "+otp;
+   document.getElementById('otpbox').style.display="block";
+ },function(err){
+   document.getElementById('status').innerText="EmailJS 404 - Showing OTP locally";
+   document.getElementById('otpdisplay').innerText="YOUR OTP IS: "+otp;
+   document.getElementById('otpbox').style.display="block";
+   console.log(err);
+ });
 }
-function verifyOTP(){let v=document.getElementById('otpinput').value;if(v==otp){document.getElementById('status').innerText="✅ Verified! Welcome to Taarifa Ke!";alert("Success! Verified!");}else{document.getElementById('status').innerText="❌ Wrong OTP - Correct is: "+otp;}}
-</script></body></html>
+function verifyOTP(){
+ let v=document.getElementById('otpinput').value;
+ if(v==otp){
+   document.getElementById('status').innerText="✅ Verified! Welcome!";
+   alert("Success!");
+ } else {
+   document.getElementById('status').innerText="❌ Wrong - Correct: "+otp;
+ }
+}
+</script>
+</body>
+</html>
