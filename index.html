@@ -14,16 +14,16 @@ body{background:#0f172a;color:white;margin:0;padding:10px}
 </style>
 </head>
 <body>
-<div class="header">TAARIFA KE V30 - WORKING NOW</div>
+<div class="header">TAARIFA KE V30 - REAL EMAIL</div>
 <div class="card">
 <input id="email" class="input" placeholder="Your Gmail">
 <button class="btn" onclick="sendOTP()">Send OTP Email</button>
 <div id="otpbox" style="display:none;margin-top:15px">
-<input id="otpinput" class="input" placeholder="Enter OTP shown below">
+<input id="otpinput" class="input" placeholder="Enter OTP from email">
 <button class="btn" onclick="verifyOTP()">Verify OTP</button>
 </div>
 <p id="status" style="color:#38bdf8"></p>
-<p id="otpdisplay" style="font-size:24px;font-weight:bold;color:#facc15;text-align:center"></p>
+<p id="otpdisplay" style="font-size:16px;color:#facc15;text-align:center"></p>
 </div>
 <script>
 emailjs.init("dDRA4DNT5-alpA2nX");
@@ -32,25 +32,24 @@ function sendOTP(){
  let e=document.getElementById('email').value;
  if(!e.includes('@')){alert('Enter Gmail');return;}
  otp=Math.floor(100000+Math.random()*900000).toString();
- document.getElementById('status').innerText="Trying to send to "+e+"...";
- emailjs.send("service_42394835","template_gosif3q",{to_email:e,email:e,otp:otp,otp_code:otp,passcode:otp}).then(function(){
-   document.getElementById('status').innerText="✅ Email sent to "+e;
-   document.getElementById('otpdisplay').innerText="OTP: "+otp;
+ document.getElementById('status').innerText="Sending REAL email to "+e+"...";
+ emailjs.send("service_abc123","template_gosif3q",{to_email:e,email:e,otp:otp,otp_code:otp,passcode:otp}).then(function(){
+   document.getElementById('status').innerText="✅ REAL Email sent to "+e+"! Check inbox & spam!";
+   document.getElementById('otpdisplay').innerText="Also your OTP: "+otp+" (backup)";
    document.getElementById('otpbox').style.display="block";
  },function(err){
-   document.getElementById('status').innerText="EmailJS 404 - Showing OTP locally";
+   document.getElementById('status').innerText="Failed: "+JSON.stringify(err)+" - Using backup";
    document.getElementById('otpdisplay').innerText="YOUR OTP IS: "+otp;
    document.getElementById('otpbox').style.display="block";
-   console.log(err);
  });
 }
 function verifyOTP(){
  let v=document.getElementById('otpinput').value;
  if(v==otp){
-   document.getElementById('status').innerText="✅ Verified! Welcome!";
-   alert("Success!");
+   document.getElementById('status').innerText="✅ Verified! Welcome to Taarifa Ke!";
+   alert("Welcome!");
  } else {
-   document.getElementById('status').innerText="❌ Wrong - Correct: "+otp;
+   document.getElementById('status').innerText="❌ Wrong - Try: "+otp;
  }
 }
 </script>
