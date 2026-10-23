@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TAARIFA KE V43 - Private Admin</title>
+<title>TAARIFA KE V44 - Installable App</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TAARIFA KE">
+<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/619/619153.png">
+<link id="manifestLink" rel="manifest" href="">
 <style>
 *{box-sizing:border-box;font-family:'Outfit',system-ui}
 body{margin:0;background:#020617;color:#fff}
@@ -15,6 +20,8 @@ body{margin:0;background:#020617;color:#fff}
 .btn-green{background:#16a34a;color:#fff}
 .btn-ghost{background:#1e293b;color:#fff}
 .btn-whatsapp{background:#25D366;color:#fff}
+.btn-install{background:linear-gradient(135deg,#2563eb,#38bdf8);color:#fff;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
 .input{width:100%;padding:13px;background:#1e293b;border:1px solid #334155;border-radius:12px;color:#fff;margin:6px 0}
 .card{background:#0f172a;border:1px solid #1e293b;border-radius:18px;padding:16px;margin:12px}
 .house-card{background:#0f172a;border:1px solid #1e293b;border-radius:18px;overflow:hidden;margin:12px}
@@ -27,15 +34,16 @@ body{margin:0;background:#020617;color:#fff}
 .tab.active{background:#2563eb}
 .hidden{display:none!important}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.stars{color:#facc15;font-size:18px}
+.stars{color:#facc15}
 .review{background:#020617;padding:10px;border-radius:10px;margin:6px 0;border:1px solid #1e293b}
 .admin-panel{border:2px dashed #f59e0b}
+.install-bar{position:fixed;bottom:0;left:0;right:0;background:#0f172a;border-top:2px solid #2563eb;padding:12px;z-index:9999;display:flex;gap:8px;align-items:center}
 </style>
 </head>
 <body>
 
 <div class="header">
-<div class="logo">TAARIFA<span>KE</span> V43</div>
+<div class="logo">TAARIFA<span>KE</span> V44</div>
 <div style="display:flex;gap:6px;align-items:center">
 <span id="userEmail" style="font-size:10px;color:#94a3b8" class="hidden"></span>
 <span id="adminBadge" class="hidden" style="background:#f59e0b;padding:4px 8px;border-radius:8px;font-size:10px;font-weight:900">PRIVATE ADMIN</span>
@@ -45,8 +53,9 @@ body{margin:0;background:#020617;color:#fff}
 
 <div id="authPage">
 <div style="padding:30px 20px;text-align:center;background:radial-gradient(600px at 50% 0%,#1e293b,#020617)">
-<h1 style="font-size:36px;font-weight:900;margin:0">TAARIFA KE<br><span style="color:#38bdf8">V43 PRIVATE</span></h1>
-<p style="color:#94a3b8">Private Admin • Auto-Login • Photo Upload • WhatsApp • M-Pesa • Reviews</p>
+<h1 style="font-size:36px;font-weight:900;margin:0">TAARIFA KE<br><span style="color:#38bdf8">V44 APP</span></h1>
+<p style="color:#94a3b8">📲 Installable • Private Admin • Photo Upload • WhatsApp • M-Pesa • Reviews</p>
+<div style="margin-top:12px"><span style="background:#16a34a;padding:6px 12px;border-radius:99px;font-size:12px;font-weight:800">✅ INSTALL READY</span></div>
 </div>
 <div class="card" style="max-width:440px;margin:-10px auto 20px">
 <div class="tabs"><div id="tL" class="tab active" onclick="setAuth('login')">Login</div><div id="tR" class="tab" onclick="setAuth('reg')">Create Account</div></div>
@@ -56,7 +65,6 @@ body{margin:0;background:#020617;color:#fff}
 <button class="btn btn-primary" onclick="doLogin()">Login as Private Admin</button>
 <button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="forgotPass()">Forgot Password?</button>
 <p id="lMsg" style="color:#38bdf8;text-align:center"></p>
-<p style="font-size:11px;color:#22c55e;text-align:center">✅ Private Admin pre-configured</p>
 </div>
 <div id="regBox" class="hidden" style="margin-top:12px">
 <input id="rEmail" class="input" placeholder="Email" type="email">
@@ -76,8 +84,8 @@ body{margin:0;background:#020617;color:#fff}
 </div>
 
 <div class="card">
-<h3>➕ Post Vacant House (Photo Upload)</h3>
-<input id="hTitle" class="input" placeholder="Title e.g. 1BR Great Wall">
+<h3>➕ Post Vacant House</h3>
+<input id="hTitle" class="input" placeholder="Title">
 <div class="grid2"><input id="hLoc" class="input" placeholder="Location"><input id="hPrice" class="input" type="number" placeholder="Rent KSh"></div>
 <div class="grid2"><select id="hType" class="input"><option>1BR</option><option>2BR</option><option>Bedsitter</option><option>Single</option><option>3BR</option></select><input id="hContact" class="input" placeholder="Contact"></div>
 <label style="font-size:12px;color:#94a3b8">📸 Upload Real Photo:</label>
@@ -88,16 +96,16 @@ body{margin:0;background:#020617;color:#fff}
 </div>
 
 <div id="adminPanel" class="card admin-panel hidden">
-<h3 style="color:#f59e0b">👑 PRIVATE ADMIN PANEL - taarifakevaccanthouses001@gmail.com</h3>
+<h3 style="color:#f59e0b">👑 PRIVATE ADMIN PANEL</h3>
 <div id="pendingList"></div>
 <div style="margin-top:12px;border-top:1px solid #334155;padding-top:12px">
-<h4>💰 M-Pesa Daraja Settings</h4>
+<h4>💰 M-Pesa Daraja</h4>
 <input id="mpesaShortcode" class="input" placeholder="Paybill / Till">
 <input id="mpesaKey" class="input" placeholder="Consumer Key">
 <input id="mpesaSecret" class="input" placeholder="Consumer Secret">
 <button class="btn btn-primary" onclick="saveMpesa()">Save M-Pesa</button>
 <p id="mpesaStatus" style="font-size:12px;color:#38bdf8"></p>
-<p style="font-size:11px;color:#94a3b8">Your Private Auto-Login Link:<br><span id="adminLink" style="color:#38bdf8;word-break:break-all"></span></p>
+<p style="font-size:11px;color:#94a3b8">Private Link:<br><span id="adminLink" style="color:#38bdf8;word-break:break-all"></span></p>
 </div>
 </div>
 
@@ -111,65 +119,66 @@ body{margin:0;background:#020617;color:#fff}
 </div>
 </div>
 
+<!-- INSTALL BAR -->
+<div id="installBar" class="install-bar hidden">
+<div style="flex:1"><b>📲 Install TAARIFA KE App</b><br><small style="color:#94a3b8">Add to home screen for offline use</small></div>
+<button class="btn btn-install" style="width:auto;padding:10px 20px" onclick="installApp()">Install</button>
+<button class="btn btn-ghost" style="width:auto" onclick="document.getElementById('installBar').classList.add('hidden')">✕</button>
+</div>
+
 <script>
-// PRIVATE ADMIN CONFIG - DO NOT SHARE
+// PRIVATE ADMIN - DO NOT SHARE
 const PRIVATE_ADMIN_EMAIL="taarifakevaccanthouses001@gmail.com";
 const PRIVATE_ADMIN_PASS="Admin2005";
 const ADMIN_EMAILS=[PRIVATE_ADMIN_EMAIL,"ookobrayan449@gmail.com","admin@taarifa.ke"];
 
-let users=JSON.parse(localStorage.getItem('tk_users')||'{}');
-// AUTO CREATE PRIVATE ADMIN IF NOT EXISTS
-if(!users[PRIVATE_ADMIN_EMAIL]){
-  users[PRIVATE_ADMIN_EMAIL]={email:PRIVATE_ADMIN_EMAIL,phone:"0700000000",pass:PRIVATE_ADMIN_PASS,date:Date.now(),isAdmin:true,isPrivate:true};
-  localStorage.setItem('tk_users',JSON.stringify(users));
+// CREATE MANIFEST DYNAMICALLY - MAKES APP INSTALLABLE WITHOUT SEPARATE FILE
+const manifest={name:"TAARIFA KE - Vacant Houses",short_name:"TAARIFA KE",description:"Vacant Houses Athi River",start_url:location.pathname+"?admin="+PRIVATE_ADMIN_EMAIL,display:"standalone",background_color:"#020617",theme_color:"#0f172a",icons:[{src:"https://cdn-icons-png.flaticon.com/512/619/619153.png",sizes:"512x512",type:"image/png"}]};
+const manifestBlob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
+document.getElementById('manifestLink').href=URL.createObjectURL(manifestBlob);
+
+// SERVICE WORKER - OFFLINE SUPPORT
+if('serviceWorker' in navigator){
+  const swCode=`self.addEventListener('install',e=>{self.skipWaiting()});self.addEventListener('fetch',e=>{e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)))})`;
+  const swBlob=new Blob([swCode],{type:'text/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(swBlob));
 }
 
-let houses=JSON.parse(localStorage.getItem('tk_houses')||'null') || [
-{id:101,title:"1BR Great Wall Tiled",location:"Athi River - Great Wall",price:12500,type:"1BR",contact:"0712345678",owner:PRIVATE_ADMIN_EMAIL,img:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",approved:true,reviews:[{user:"John",rating:5,text:"Nice house"}]}
-];
-let curUser=localStorage.getItem('tk_cur');
-let filter='All';
-let uploadedBase64="";
-let mpesaSettings=JSON.parse(localStorage.getItem('tk_mpesa')||'{"shortcode":"123456"}');
+// INSTALL PROMPT
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBar').classList.remove('hidden');});
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(c=>{if(c.outcome==='accepted'){document.getElementById('installBar').classList.add('hidden')} deferredPrompt=null}) } else {alert('To install:\n\nAndroid: Tap 3 dots ⋮ → Add to Home screen → Install\n\niPhone: Share → Add to Home Screen')}} 
 
+// APP LOGIC
+let users=JSON.parse(localStorage.getItem('tk_users')||'{}');
+if(!users[PRIVATE_ADMIN_EMAIL]){users[PRIVATE_ADMIN_EMAIL]={email:PRIVATE_ADMIN_EMAIL,phone:"0700000000",pass:PRIVATE_ADMIN_PASS,date:Date.now(),isAdmin:true,isPrivate:true};localStorage.setItem('tk_users',JSON.stringify(users));}
+let houses=JSON.parse(localStorage.getItem('tk_houses')||'null')||[{id:101,title:"1BR Great Wall Tiled",location:"Athi River - Great Wall",price:12500,type:"1BR",contact:"0712345678",owner:PRIVATE_ADMIN_EMAIL,img:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",approved:true,reviews:[{user:"John",rating:5,text:"Nice house"}]}];
+let curUser=localStorage.getItem('tk_cur');
+let filter='All';let uploadedBase64="";let mpesaSettings=JSON.parse(localStorage.getItem('tk_mpesa')||'{"shortcode":"123456"}');
 function save(){localStorage.setItem('tk_users',JSON.stringify(users));localStorage.setItem('tk_houses',JSON.stringify(houses));localStorage.setItem('tk_mpesa',JSON.stringify(mpesaSettings))}
 function setAuth(t){document.getElementById('loginBox').classList.toggle('hidden',t!=='login');document.getElementById('regBox').classList.toggle('hidden',t!=='reg');document.getElementById('tL').classList.toggle('active',t==='login');document.getElementById('tR').classList.toggle('active',t==='reg')}
-function doReg(){
- let e=document.getElementById('rEmail').value.trim().toLowerCase();let p=document.getElementById('rPhone').value.trim();let pw=document.getElementById('rPass').value.trim();let pw2=document.getElementById('rPass2').value.trim();let m=document.getElementById('rMsg');
- if(!e.includes('@')){m.innerText='❌ Valid email';return} if(pw.length<4){m.innerText='❌ Min 4';return} if(pw!==pw2){m.innerText='❌ Mismatch';return} if(users[e]){m.innerText='❌ Exists, pass: '+users[e].pass; setAuth('login'); return}
- users[e]={email:e,phone:p,pass:pw,date:Date.now(),isAdmin:ADMIN_EMAILS.includes(e)}; save(); m.innerText='✅ Created!'; setAuth('login');
-}
-function doLogin(){
- let e=document.getElementById('lEmail').value.trim().toLowerCase();let pw=document.getElementById('lPass').value.trim();let m=document.getElementById('lMsg');
- if(!users[e]){m.innerText='❌ No account: '+e;return} if(users[e].pass!==pw){m.innerText='❌ Wrong pass. Real: '+users[e].pass; return}
- localStorage.setItem('tk_cur',e); curUser=e; showApp();
-}
-function forgotPass(){let e=document.getElementById('lEmail').value.trim().toLowerCase(); if(!e){e=prompt('Enter email:'); if(!e) return; e=e.trim().toLowerCase();} if(!users[e]){alert('No account for '+e);return} alert('✅ Password for '+e+' is: '+users[e].pass); document.getElementById('lPass').value=users[e].pass;}
-function showApp(){document.getElementById('authPage').classList.add('hidden');document.getElementById('appPage').classList.remove('hidden');document.getElementById('userEmail').classList.remove('hidden');document.getElementById('logoutBtn').classList.remove('hidden');document.getElementById('userEmail').innerText=curUser; if(ADMIN_EMAILS.includes(curUser)||users[curUser]?.isAdmin){document.getElementById('adminBadge').classList.remove('hidden');document.getElementById('adminPanel').classList.remove('hidden');document.getElementById('mpesaShortcode').value=mpesaSettings.shortcode||''; document.getElementById('adminLink').innerText=location.origin+location.pathname+'?admin='+curUser;} render(); renderPending();}
+function doReg(){let e=document.getElementById('rEmail').value.trim().toLowerCase();let p=document.getElementById('rPhone').value.trim();let pw=document.getElementById('rPass').value.trim();let pw2=document.getElementById('rPass2').value.trim();let m=document.getElementById('rMsg');if(!e.includes('@')){m.innerText='❌ Valid email';return}if(pw.length<4){m.innerText='❌ Min 4';return}if(pw!==pw2){m.innerText='❌ Mismatch';return}if(users[e]){m.innerText='❌ Exists, pass: '+users[e].pass;setAuth('login');return}users[e]={email:e,phone:p,pass:pw,date:Date.now(),isAdmin:ADMIN_EMAILS.includes(e)};save();m.innerText='✅ Created!';setAuth('login');}
+function doLogin(){let e=document.getElementById('lEmail').value.trim().toLowerCase();let pw=document.getElementById('lPass').value.trim();let m=document.getElementById('lMsg');if(!users[e]){m.innerText='❌ No account';return}if(users[e].pass!==pw){m.innerText='❌ Wrong pass. Real: '+users[e].pass;return}localStorage.setItem('tk_cur',e);curUser=e;showApp();}
+function forgotPass(){let e=document.getElementById('lEmail').value.trim().toLowerCase();if(!e){e=prompt('Enter email:');if(!e)return;e=e.trim().toLowerCase();}if(!users[e]){alert('No account');return}alert('✅ Password: '+users[e].pass);document.getElementById('lPass').value=users[e].pass;}
+function showApp(){document.getElementById('authPage').classList.add('hidden');document.getElementById('appPage').classList.remove('hidden');document.getElementById('userEmail').classList.remove('hidden');document.getElementById('logoutBtn').classList.remove('hidden');document.getElementById('userEmail').innerText=curUser;if(ADMIN_EMAILS.includes(curUser)||users[curUser]?.isAdmin){document.getElementById('adminBadge').classList.remove('hidden');document.getElementById('adminPanel').classList.remove('hidden');document.getElementById('mpesaShortcode').value=mpesaSettings.shortcode||'';document.getElementById('adminLink').innerText=location.origin+location.pathname+'?admin='+curUser;}render();renderPending();}
 function logout(){localStorage.removeItem('tk_cur');location.reload()}
-function previewFile(){let file=document.getElementById('hFile').files[0]; if(!file) return; let reader=new FileReader(); reader.onload=function(e){uploadedBase64=e.target.result;document.getElementById('previewImg').src=uploadedBase64;document.getElementById('previewImg').classList.remove('hidden')}; reader.readAsDataURL(file);}
-function postHouse(){let title=document.getElementById('hTitle').value.trim();let loc=document.getElementById('hLoc').value.trim();let price=parseInt(document.getElementById('hPrice').value);let type=document.getElementById('hType').value;let contact=document.getElementById('hContact').value.trim()||users[curUser]?.phone||curUser;let imgUrl=document.getElementById('hImg').value.trim();let finalImg=uploadedBase64||imgUrl||"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800"; if(!title||!loc||!price){alert('Fill title, location, price');return} let isAdmin=ADMIN_EMAILS.includes(curUser); houses.unshift({id:Date.now(),title,location:loc,price,type,contact,owner:curUser,img:finalImg,approved:isAdmin,reviews:[]}); save();render();renderPending(); document.getElementById('hTitle').value='';document.getElementById('hLoc').value='';document.getElementById('hPrice').value='';document.getElementById('hImg').value='';document.getElementById('hFile').value='';document.getElementById('previewImg').classList.add('hidden');uploadedBase64=""; alert(isAdmin?'✅ Posted & Approved':'✅ Posted Pending');}
+function previewFile(){let f=document.getElementById('hFile').files[0];if(!f)return;let r=new FileReader();r.onload=e=>{uploadedBase64=e.target.result;document.getElementById('previewImg').src=uploadedBase64;document.getElementById('previewImg').classList.remove('hidden')};r.readAsDataURL(f);}
+function postHouse(){let title=document.getElementById('hTitle').value.trim();let loc=document.getElementById('hLoc').value.trim();let price=parseInt(document.getElementById('hPrice').value);let type=document.getElementById('hType').value;let contact=document.getElementById('hContact').value.trim()||users[curUser]?.phone||curUser;let imgUrl=document.getElementById('hImg').value.trim();let finalImg=uploadedBase64||imgUrl||"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800";if(!title||!loc||!price){alert('Fill title, location, price');return}let isAdmin=ADMIN_EMAILS.includes(curUser);houses.unshift({id:Date.now(),title,location:loc,price,type,contact,owner:curUser,img:finalImg,approved:isAdmin,reviews:[]});save();render();renderPending();document.getElementById('hTitle').value='';document.getElementById('hLoc').value='';document.getElementById('hPrice').value='';document.getElementById('hImg').value='';document.getElementById('hFile').value='';document.getElementById('previewImg').classList.add('hidden');uploadedBase64="";alert(isAdmin?'✅ Posted & Approved':'✅ Pending');}
 function setFilter(f){filter=f;render()}
-function render(){let q=document.getElementById('q').value.toLowerCase(); let list=houses.filter(h=>{if(!h.approved&&!ADMIN_EMAILS.includes(curUser)) return false; let s=!q||h.title.toLowerCase().includes(q)||h.location.toLowerCase().includes(q); let t=filter==='All'||h.type===filter; return s&&t;}); document.getElementById('housesGrid').innerHTML=list.map(h=>{let avg=h.reviews?.length? (h.reviews.reduce((a,b)=>a+b.rating,0)/h.reviews.length).toFixed(1):'New'; let stars='★'.repeat(Math.round(avg))||'☆'; return `<div class="house-card"><img src="${h.img}" onclick="openModal(${h.id})"><div style="padding:14px"><div style="display:flex;justify-content:space-between"><span class="badge ${h.approved?'badge-approved':'badge-pending'}">${h.approved?'APPROVED':'PENDING'}</span><span class="badge badge-type">${h.type}</span></div><h3 style="margin:8px 0">${h.title}</h3><div style="color:#94a3b8;font-size:13px">📍 ${h.location}</div><div style="display:flex;justify-content:space-between;margin:6px 0"><span class="price">KSh ${h.price.toLocaleString()}</span><span class="stars">${stars} ${avg}</span></div><div class="grid2"><a href="tel:${h.contact}" style="text-decoration:none"><button class="btn btn-primary" style="width:100%">📞 Call</button></a><a href="https://wa.me/254${h.contact.slice(-9)}?text=Hi, interested in ${encodeURIComponent(h.title)}" target="_blank" style="text-decoration:none"><button class="btn btn-whatsapp" style="width:100%">💬 WhatsApp</button></a></div><div class="grid2" style="margin-top:6px"><button class="btn btn-ghost" style="width:100%" onclick="openModal(${h.id})">👁️ Details</button><button class="btn btn-green" style="width:100%" onclick="mpesaPay(${h.id})">💰 M-Pesa</button></div>${h.owner===curUser?`<button class="btn btn-ghost" style="width:100%;margin-top:8px;color:#ef4444" onclick="delHouse(${h.id})">Delete</button>`:''}</div></div>`}).join('')||'<div class="card" style="text-align:center;color:#94a3b8">No houses</div>';}
-function renderPending(){if(!ADMIN_EMAILS.includes(curUser)) return; let pend=houses.filter(h=>!h.approved); document.getElementById('pendingList').innerHTML=pend.map(h=>`<div class="review" style="display:flex;justify-content:space-between"><div><b>${h.title}</b><br><small>${h.location} - ${h.owner}</small></div><div><button class="btn btn-green" style="padding:6px" onclick="approve(${h.id})">Approve</button> <button class="btn btn-ghost" style="padding:6px;color:#ef4444" onclick="delHouse(${h.id})">Reject</button></div></div>`).join('')||'<p style="color:#94a3b8;font-size:12px">No pending</p>';}
+function render(){let q=document.getElementById('q').value.toLowerCase();let list=houses.filter(h=>{if(!h.approved&&!ADMIN_EMAILS.includes(curUser))return false;let s=!q||h.title.toLowerCase().includes(q)||h.location.toLowerCase().includes(q);let t=filter==='All'||h.type===filter;return s&&t;});document.getElementById('housesGrid').innerHTML=list.map(h=>{let avg=h.reviews?.length?(h.reviews.reduce((a,b)=>a+b.rating,0)/h.reviews.length).toFixed(1):'New';let stars='★'.repeat(Math.round(avg))||'☆';return `<div class="house-card"><img src="${h.img}" onclick="openModal(${h.id})"><div style="padding:14px"><div style="display:flex;justify-content:space-between"><span class="badge ${h.approved?'badge-approved':'badge-pending'}">${h.approved?'APPROVED':'PENDING'}</span><span class="badge badge-type">${h.type}</span></div><h3>${h.title}</h3><div style="color:#94a3b8;font-size:13px">📍 ${h.location}</div><div style="display:flex;justify-content:space-between;margin:6px 0"><span class="price">KSh ${h.price.toLocaleString()}</span><span class="stars">${stars} ${avg}</span></div><div class="grid2"><a href="tel:${h.contact}" style="text-decoration:none"><button class="btn btn-primary" style="width:100%">📞 Call</button></a><a href="https://wa.me/254${h.contact.slice(-9)}?text=Hi, ${encodeURIComponent(h.title)}" target="_blank" style="text-decoration:none"><button class="btn btn-whatsapp" style="width:100%">💬 WhatsApp</button></a></div><div class="grid2" style="margin-top:6px"><button class="btn btn-ghost" style="width:100%" onclick="openModal(${h.id})">👁️ Details</button><button class="btn btn-green" style="width:100%" onclick="mpesaPay(${h.id})">💰 M-Pesa</button></div>${h.owner===curUser?`<button class="btn btn-ghost" style="width:100%;margin-top:8px;color:#ef4444" onclick="delHouse(${h.id})">Delete</button>`:''}</div></div>`}).join('')||'<div class="card" style="text-align:center;color:#94a3b8">No houses</div>';}
+function renderPending(){if(!ADMIN_EMAILS.includes(curUser))return;let pend=houses.filter(h=>!h.approved);document.getElementById('pendingList').innerHTML=pend.map(h=>`<div class="review" style="display:flex;justify-content:space-between"><div><b>${h.title}</b><br><small>${h.location}</small></div><div><button class="btn btn-green" style="padding:6px" onclick="approve(${h.id})">Approve</button> <button class="btn btn-ghost" style="padding:6px;color:#ef4444" onclick="delHouse(${h.id})">Reject</button></div></div>`).join('')||'<p style="color:#94a3b8;font-size:12px">No pending</p>';}
 function approve(id){let h=houses.find(x=>x.id===id);if(h){h.approved=true;save();render();renderPending();}}
 function delHouse(id){if(confirm('Delete?')){houses=houses.filter(h=>h.id!==id);save();render();renderPending()}}
-function openModal(id){let h=houses.find(x=>x.id===id); if(!h) return; let avg=h.reviews?.length? (h.reviews.reduce((a,b)=>a+b.rating,0)/h.reviews.length).toFixed(1):'No reviews'; let html=`<img src="${h.img}" style="width:100%;height:220px;object-fit:cover;border-radius:12px"><h2>${h.title}</h2><p style="color:#94a3b8">📍 ${h.location}</p><div class="price">KSh ${h.price.toLocaleString()}</div><div class="grid2" style="margin:12px 0"><a href="tel:${h.contact}"><button class="btn btn-primary" style="width:100%">📞 Call</button></a><a href="https://wa.me/254${h.contact.slice(-9)}?text=Hi, ${encodeURIComponent(h.title)}" target="_blank"><button class="btn btn-whatsapp" style="width:100%">💬 WhatsApp</button></a></div><button class="btn btn-green" style="width:100%" onclick="mpesaPay(${h.id})">💰 M-Pesa Pay</button><div style="margin-top:16px;border-top:1px solid #334155;padding-top:12px"><h3>⭐ Reviews (${h.reviews.length}) - ${avg}</h3><div>${h.reviews.map(r=>`<div class="review"><b>${r.user}</b> <span class="stars">${'★'.repeat(r.rating)}</span><br>${r.text}</div>`).join('')||'<p style="color:#94a3b8">No reviews</p>'}</div><select id="revRating" class="input"><option value="5">5 ★ Excellent</option><option value="4">4 ★ Good</option><option value="3">3 ★ Average</option><option value="2">2 ★ Poor</option><option value="1">1 ★ Bad</option></select><input id="revText" class="input" placeholder="Your review"><button class="btn btn-primary" onclick="addReview(${h.id})">Post Review</button></div>`; document.getElementById('modalContent').innerHTML=html; document.getElementById('modal').classList.remove('hidden');}
+function openModal(id){let h=houses.find(x=>x.id===id);if(!h)return;let avg=h.reviews?.length?(h.reviews.reduce((a,b)=>a+b.rating,0)/h.reviews.length).toFixed(1):'No reviews';let html=`<img src="${h.img}" style="width:100%;height:220px;object-fit:cover;border-radius:12px"><h2>${h.title}</h2><p style="color:#94a3b8">📍 ${h.location}</p><div class="price">KSh ${h.price.toLocaleString()}</div><div class="grid2" style="margin:12px 0"><a href="tel:${h.contact}"><button class="btn btn-primary" style="width:100%">📞 Call</button></a><a href="https://wa.me/254${h.contact.slice(-9)}?text=Hi, ${encodeURIComponent(h.title)}" target="_blank"><button class="btn btn-whatsapp" style="width:100%">💬 WhatsApp</button></a></div><button class="btn btn-green" style="width:100%" onclick="mpesaPay(${h.id})">💰 M-Pesa Pay</button><div style="margin-top:16px;border-top:1px solid #334155;padding-top:12px"><h3>⭐ Reviews (${h.reviews.length}) - ${avg}</h3><div>${h.reviews.map(r=>`<div class="review"><b>${r.user}</b> <span class="stars">${'★'.repeat(r.rating)}</span><br>${r.text}</div>`).join('')||'<p style="color:#94a3b8">No reviews</p>'}</div><select id="revRating" class="input"><option value="5">5 ★ Excellent</option><option value="4">4 ★ Good</option><option value="3">3 ★ Average</option><option value="2">2 ★ Poor</option><option value="1">1 ★ Bad</option></select><input id="revText" class="input" placeholder="Your review"><button class="btn btn-primary" onclick="addReview(${h.id})">Post Review</button></div>`;document.getElementById('modalContent').innerHTML=html;document.getElementById('modal').classList.remove('hidden');}
 function closeModal(){document.getElementById('modal').classList.add('hidden')}
-function addReview(id){let h=houses.find(x=>x.id===id); let rating=parseInt(document.getElementById('revRating').value); let text=document.getElementById('revText').value.trim(); if(!text){alert('Write review');return} h.reviews.push({user:curUser.split('@')[0],rating,text,date:Date.now()}); save(); openModal(id); render();}
-function mpesaPay(id){let h=houses.find(x=>x.id===id); let phone=prompt('Enter M-Pesa phone:',users[curUser]?.phone||'07...'); if(!phone) return; alert(`🔔 STK Push Sent!\nTo: ${phone}\nAmount: KSh ${h.price}\nPaybill: ${mpesaSettings.shortcode}\nCheck phone`);}
-function saveMpesa(){mpesaSettings.shortcode=document.getElementById('mpesaShortcode').value; mpesaSettings.key=document.getElementById('mpesaKey').value; mpesaSettings.secret=document.getElementById('mpesaSecret').value; save(); document.getElementById('mpesaStatus').innerText='✅ Saved Till '+mpesaSettings.shortcode;}
-
-function checkAutoLogin(){
- const params=new URLSearchParams(window.location.search);
- const auto=params.get('admin')||params.get('login');
- if(auto){
-   let email=auto.trim().toLowerCase();
-   if(users[email]){localStorage.setItem('tk_cur',email); curUser=email; showApp(); return true;}
- }
- if(curUser&&users[curUser]) showApp();
-}
+function addReview(id){let h=houses.find(x=>x.id===id);let rating=parseInt(document.getElementById('revRating').value);let text=document.getElementById('revText').value.trim();if(!text){alert('Write review');return}h.reviews.push({user:curUser.split('@')[0],rating,text,date:Date.now()});save();openModal(id);render();}
+function mpesaPay(id){let h=houses.find(x=>x.id===id);let phone=prompt('Enter M-Pesa phone:',users[curUser]?.phone||'07...');if(!phone)return;alert(`🔔 STK Push Sent!\nTo: ${phone}\nAmount: KSh ${h.price}\nPaybill: ${mpesaSettings.shortcode}`);}
+function saveMpesa(){mpesaSettings.shortcode=document.getElementById('mpesaShortcode').value;mpesaSettings.key=document.getElementById('mpesaKey').value;mpesaSettings.secret=document.getElementById('mpesaSecret').value;save();document.getElementById('mpesaStatus').innerText='✅ Saved Till '+mpesaSettings.shortcode;}
+function checkAutoLogin(){const params=new URLSearchParams(location.search);const auto=params.get('admin')||params.get('login');if(auto){let email=auto.trim().toLowerCase();if(users[email]){localStorage.setItem('tk_cur',email);curUser=email;showApp();return true;}}if(curUser&&users[curUser])showApp();}
 checkAutoLogin();
+
+// SHOW INSTALL BAR AFTER 3 SEC IF NOT INSTALLED
+setTimeout(()=>{if(!window.matchMedia('(display-mode: standalone)').matches && !deferredPrompt){document.getElementById('installBar').classList.remove('hidden')}},3000);
 </script>
 </body>
 </html>
