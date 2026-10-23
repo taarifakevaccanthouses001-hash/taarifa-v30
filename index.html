@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TAARIFA KE V40 - Ultimate</title>
+<title>TAARIFA KE V43 - Private Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;font-family:'Outfit',system-ui}
@@ -35,28 +35,28 @@ body{margin:0;background:#020617;color:#fff}
 <body>
 
 <div class="header">
-<div class="logo">TAARIFA<span>KE</span> V40</div>
+<div class="logo">TAARIFA<span>KE</span> V43</div>
 <div style="display:flex;gap:6px;align-items:center">
 <span id="userEmail" style="font-size:10px;color:#94a3b8" class="hidden"></span>
-<span id="adminBadge" class="hidden" style="background:#f59e0b;padding:4px 8px;border-radius:8px;font-size:10px;font-weight:900">ADMIN</span>
+<span id="adminBadge" class="hidden" style="background:#f59e0b;padding:4px 8px;border-radius:8px;font-size:10px;font-weight:900">PRIVATE ADMIN</span>
 <button id="logoutBtn" class="hidden btn-ghost btn" style="padding:8px" onclick="logout()">Logout</button>
 </div>
 </div>
 
-<!-- AUTH -->
 <div id="authPage">
 <div style="padding:30px 20px;text-align:center;background:radial-gradient(600px at 50% 0%,#1e293b,#020617)">
-<h1 style="font-size:36px;font-weight:900;margin:0">TAARIFA KE<br><span style="color:#38bdf8">V40 ULTIMATE</span></h1>
-<p style="color:#94a3b8">Vacant Houses • WhatsApp • M-Pesa • Reviews • Photo Upload • Admin</p>
+<h1 style="font-size:36px;font-weight:900;margin:0">TAARIFA KE<br><span style="color:#38bdf8">V43 PRIVATE</span></h1>
+<p style="color:#94a3b8">Private Admin • Auto-Login • Photo Upload • WhatsApp • M-Pesa • Reviews</p>
 </div>
 <div class="card" style="max-width:440px;margin:-10px auto 20px">
 <div class="tabs"><div id="tL" class="tab active" onclick="setAuth('login')">Login</div><div id="tR" class="tab" onclick="setAuth('reg')">Create Account</div></div>
 <div id="loginBox" style="margin-top:12px">
-<input id="lEmail" class="input" placeholder="Email" type="email">
-<input id="lPass" class="input" placeholder="Password" type="password">
-<button class="btn btn-primary" onclick="doLogin()">Login</button>
+<input id="lEmail" class="input" placeholder="Email" type="email" value="taarifakevaccanthouses001@gmail.com">
+<input id="lPass" class="input" placeholder="Password" type="password" value="Admin2005">
+<button class="btn btn-primary" onclick="doLogin()">Login as Private Admin</button>
+<button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="forgotPass()">Forgot Password?</button>
 <p id="lMsg" style="color:#38bdf8;text-align:center"></p>
-<p style="font-size:11px;color:#64748b;text-align:center">Admin: ookobrayan449@gmail.com / any pass you set = ADMIN</p>
+<p style="font-size:11px;color:#22c55e;text-align:center">✅ Private Admin pre-configured</p>
 </div>
 <div id="regBox" class="hidden" style="margin-top:12px">
 <input id="rEmail" class="input" placeholder="Email" type="email">
@@ -69,45 +69,41 @@ body{margin:0;background:#020617;color:#fff}
 </div>
 </div>
 
-<!-- APP -->
 <div id="appPage" class="hidden">
 <div style="padding:12px;position:sticky;top:56px;background:#020617;z-index:8">
-<input id="q" class="input" placeholder="🔍 Search location, 1BR..." oninput="render()">
+<input id="q" class="input" placeholder="🔍 Search location..." oninput="render()">
 <div class="grid2" style="margin-top:8px"><button class="btn btn-ghost" onclick="setFilter('All')">All</button><button class="btn btn-ghost" onclick="setFilter('1BR')">1BR</button><button class="btn btn-ghost" onclick="setFilter('2BR')">2BR</button><button class="btn btn-ghost" onclick="setFilter('Bedsitter')">Bedsitter</button></div>
 </div>
 
-<!-- POST HOUSE WITH REAL PHOTO UPLOAD -->
 <div class="card">
-<h3 style="margin:0 0 10px">➕ Post Vacant House (Photo Upload)</h3>
+<h3>➕ Post Vacant House (Photo Upload)</h3>
 <input id="hTitle" class="input" placeholder="Title e.g. 1BR Great Wall">
 <div class="grid2"><input id="hLoc" class="input" placeholder="Location"><input id="hPrice" class="input" type="number" placeholder="Rent KSh"></div>
-<div class="grid2"><select id="hType" class="input"><option>1BR</option><option>2BR</option><option>Bedsitter</option><option>Single</option><option>3BR</option></select><input id="hContact" class="input" placeholder="M-Pesa / Contact"></div>
-<label style="font-size:12px;color:#94a3b8">📸 Upload Real Photo from Phone:</label>
+<div class="grid2"><select id="hType" class="input"><option>1BR</option><option>2BR</option><option>Bedsitter</option><option>Single</option><option>3BR</option></select><input id="hContact" class="input" placeholder="Contact"></div>
+<label style="font-size:12px;color:#94a3b8">📸 Upload Real Photo:</label>
 <input id="hFile" type="file" accept="image/*" class="input" onchange="previewFile()">
 <img id="previewImg" class="hidden" style="width:100%;height:150px;object-fit:cover;border-radius:12px;margin-top:8px">
-<input id="hImg" class="input" placeholder="Or paste Image URL (optional)">
-<button class="btn btn-green" style="width:100%" onclick="postHouse()">Post House - Pending Admin Approval</button>
+<input id="hImg" class="input" placeholder="Or Image URL">
+<button class="btn btn-green" style="width:100%" onclick="postHouse()">Post House</button>
 </div>
 
-<!-- ADMIN PANEL -->
 <div id="adminPanel" class="card admin-panel hidden">
-<h3 style="margin:0;color:#f59e0b">👑 ADMIN PANEL - Approve Houses</h3>
-<p style="font-size:12px;color:#94a3b8">You are Admin - Approve pending houses</p>
+<h3 style="color:#f59e0b">👑 PRIVATE ADMIN PANEL - taarifakevaccanthouses001@gmail.com</h3>
 <div id="pendingList"></div>
 <div style="margin-top:12px;border-top:1px solid #334155;padding-top:12px">
-<h4>💰 M-Pesa Daraja Settings (Real Payment)</h4>
-<input id="mpesaShortcode" class="input" placeholder="Paybill / Till e.g. 123456">
-<input id="mpesaKey" class="input" placeholder="Consumer Key (Daraja)">
+<h4>💰 M-Pesa Daraja Settings</h4>
+<input id="mpesaShortcode" class="input" placeholder="Paybill / Till">
+<input id="mpesaKey" class="input" placeholder="Consumer Key">
 <input id="mpesaSecret" class="input" placeholder="Consumer Secret">
-<button class="btn btn-primary" onclick="saveMpesa()">Save M-Pesa Settings</button>
+<button class="btn btn-primary" onclick="saveMpesa()">Save M-Pesa</button>
 <p id="mpesaStatus" style="font-size:12px;color:#38bdf8"></p>
+<p style="font-size:11px;color:#94a3b8">Your Private Auto-Login Link:<br><span id="adminLink" style="color:#38bdf8;word-break:break-all"></span></p>
 </div>
 </div>
 
 <div id="housesGrid"></div>
 </div>
 
-<!-- HOUSE DETAIL MODAL WITH REVIEWS & WHATSAPP & MPESA -->
 <div id="modal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:100;overflow:auto;padding:12px">
 <div class="card" style="max-width:500px;margin:20px auto">
 <button class="btn btn-ghost" style="float:right" onclick="closeModal()">✕ Close</button>
@@ -116,129 +112,64 @@ body{margin:0;background:#020617;color:#fff}
 </div>
 
 <script>
+// PRIVATE ADMIN CONFIG - DO NOT SHARE
+const PRIVATE_ADMIN_EMAIL="taarifakevaccanthouses001@gmail.com";
+const PRIVATE_ADMIN_PASS="Admin2005";
+const ADMIN_EMAILS=[PRIVATE_ADMIN_EMAIL,"ookobrayan449@gmail.com","admin@taarifa.ke"];
+
 let users=JSON.parse(localStorage.getItem('tk_users')||'{}');
+// AUTO CREATE PRIVATE ADMIN IF NOT EXISTS
+if(!users[PRIVATE_ADMIN_EMAIL]){
+  users[PRIVATE_ADMIN_EMAIL]={email:PRIVATE_ADMIN_EMAIL,phone:"0700000000",pass:PRIVATE_ADMIN_PASS,date:Date.now(),isAdmin:true,isPrivate:true};
+  localStorage.setItem('tk_users',JSON.stringify(users));
+}
+
 let houses=JSON.parse(localStorage.getItem('tk_houses')||'null') || [
-{id:101,title:"1BR Great Wall Tiled",location:"Athi River - Great Wall",price:12500,type:"1BR",contact:"0712345678",owner:"admin@taarifa.ke",img:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",approved:true,reviews:[{user:"John",rating:5,text:"Nice house, water 24/7"},{user:"Mary",rating:4,text:"Good security"}]},
-{id:102,title:"Bedsitter Devki",location:"Athi River - Devki",price:6500,type:"Bedsitter",contact:"0722000001",owner:"landlord",img:"https://images.unsplash.com/photo-1502672023488-70e25813eb80?w=800",approved:true,reviews:[]}
+{id:101,title:"1BR Great Wall Tiled",location:"Athi River - Great Wall",price:12500,type:"1BR",contact:"0712345678",owner:PRIVATE_ADMIN_EMAIL,img:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",approved:true,reviews:[{user:"John",rating:5,text:"Nice house"}]}
 ];
 let curUser=localStorage.getItem('tk_cur');
 let filter='All';
 let uploadedBase64="";
 let mpesaSettings=JSON.parse(localStorage.getItem('tk_mpesa')||'{"shortcode":"123456"}');
-const ADMIN_EMAILS=["ookobrayan449@gmail.com","admin@taarifa.ke"];
 
 function save(){localStorage.setItem('tk_users',JSON.stringify(users));localStorage.setItem('tk_houses',JSON.stringify(houses));localStorage.setItem('tk_mpesa',JSON.stringify(mpesaSettings))}
-
 function setAuth(t){document.getElementById('loginBox').classList.toggle('hidden',t!=='login');document.getElementById('regBox').classList.toggle('hidden',t!=='reg');document.getElementById('tL').classList.toggle('active',t==='login');document.getElementById('tR').classList.toggle('active',t==='reg')}
-
 function doReg(){
- let e=document.getElementById('rEmail').value.trim().toLowerCase();let p=document.getElementById('rPhone').value;let pw=document.getElementById('rPass').value;let pw2=document.getElementById('rPass2').value;let m=document.getElementById('rMsg');
- if(!e.includes('@')){m.innerText='❌ Valid email';return} if(pw.length<4){m.innerText='❌ Min 4';return} if(pw!==pw2){m.innerText='❌ Mismatch';return} if(users[e]){m.innerText='❌ Exists, login';return}
- users[e]={email:e,phone:p,pass:pw,date:Date.now(),isAdmin:ADMIN_EMAILS.includes(e)};save();m.innerText='✅ Created! Login';setAuth('login');document.getElementById('lEmail').value=e;
+ let e=document.getElementById('rEmail').value.trim().toLowerCase();let p=document.getElementById('rPhone').value.trim();let pw=document.getElementById('rPass').value.trim();let pw2=document.getElementById('rPass2').value.trim();let m=document.getElementById('rMsg');
+ if(!e.includes('@')){m.innerText='❌ Valid email';return} if(pw.length<4){m.innerText='❌ Min 4';return} if(pw!==pw2){m.innerText='❌ Mismatch';return} if(users[e]){m.innerText='❌ Exists, pass: '+users[e].pass; setAuth('login'); return}
+ users[e]={email:e,phone:p,pass:pw,date:Date.now(),isAdmin:ADMIN_EMAILS.includes(e)}; save(); m.innerText='✅ Created!'; setAuth('login');
 }
 function doLogin(){
- let e=document.getElementById('lEmail').value.trim().toLowerCase();let pw=document.getElementById('lPass').value;let m=document.getElementById('lMsg');
- if(!users[e]){m.innerText='❌ No account, create';return} if(users[e].pass!==pw){m.innerText='❌ Wrong pass';return}
- localStorage.setItem('tk_cur',e);curUser=e;showApp();
+ let e=document.getElementById('lEmail').value.trim().toLowerCase();let pw=document.getElementById('lPass').value.trim();let m=document.getElementById('lMsg');
+ if(!users[e]){m.innerText='❌ No account: '+e;return} if(users[e].pass!==pw){m.innerText='❌ Wrong pass. Real: '+users[e].pass; return}
+ localStorage.setItem('tk_cur',e); curUser=e; showApp();
 }
-function showApp(){
- document.getElementById('authPage').classList.add('hidden');document.getElementById('appPage').classList.remove('hidden');
- document.getElementById('userEmail').classList.remove('hidden');document.getElementById('logoutBtn').classList.remove('hidden');
- document.getElementById('userEmail').innerText=curUser;
- if(ADMIN_EMAILS.includes(curUser)||users[curUser]?.isAdmin){document.getElementById('adminBadge').classList.remove('hidden');document.getElementById('adminPanel').classList.remove('hidden');document.getElementById('mpesaShortcode').value=mpesaSettings.shortcode||''}
- render();renderPending();
-}
+function forgotPass(){let e=document.getElementById('lEmail').value.trim().toLowerCase(); if(!e){e=prompt('Enter email:'); if(!e) return; e=e.trim().toLowerCase();} if(!users[e]){alert('No account for '+e);return} alert('✅ Password for '+e+' is: '+users[e].pass); document.getElementById('lPass').value=users[e].pass;}
+function showApp(){document.getElementById('authPage').classList.add('hidden');document.getElementById('appPage').classList.remove('hidden');document.getElementById('userEmail').classList.remove('hidden');document.getElementById('logoutBtn').classList.remove('hidden');document.getElementById('userEmail').innerText=curUser; if(ADMIN_EMAILS.includes(curUser)||users[curUser]?.isAdmin){document.getElementById('adminBadge').classList.remove('hidden');document.getElementById('adminPanel').classList.remove('hidden');document.getElementById('mpesaShortcode').value=mpesaSettings.shortcode||''; document.getElementById('adminLink').innerText=location.origin+location.pathname+'?admin='+curUser;} render(); renderPending();}
 function logout(){localStorage.removeItem('tk_cur');location.reload()}
-
-function previewFile(){
- let file=document.getElementById('hFile').files[0]; if(!file) return;
- let reader=new FileReader(); reader.onload=function(e){uploadedBase64=e.target.result;document.getElementById('previewImg').src=uploadedBase64;document.getElementById('previewImg').classList.remove('hidden')}; reader.readAsDataURL(file);
-}
-
-function postHouse(){
- let title=document.getElementById('hTitle').value.trim();let loc=document.getElementById('hLoc').value.trim();let price=parseInt(document.getElementById('hPrice').value);let type=document.getElementById('hType').value;let contact=document.getElementById('hContact').value.trim()||users[curUser]?.phone||curUser;let imgUrl=document.getElementById('hImg').value.trim();
- let finalImg=uploadedBase64||imgUrl||"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800";
- if(!title||!loc||!price){alert('Fill title, location, price');return}
- let isAdmin=ADMIN_EMAILS.includes(curUser);
- houses.unshift({id:Date.now(),title,location:loc,price,type,contact,owner:curUser,img:finalImg,approved:isAdmin,reviews:[]});
- save();render();renderPending();
- document.getElementById('hTitle').value='';document.getElementById('hLoc').value='';document.getElementById('hPrice').value='';document.getElementById('hImg').value='';document.getElementById('hFile').value='';document.getElementById('previewImg').classList.add('hidden');uploadedBase64="";
- alert(isAdmin?'✅ Posted & Approved (Admin)':'✅ Posted! Pending admin approval');
-}
-
+function previewFile(){let file=document.getElementById('hFile').files[0]; if(!file) return; let reader=new FileReader(); reader.onload=function(e){uploadedBase64=e.target.result;document.getElementById('previewImg').src=uploadedBase64;document.getElementById('previewImg').classList.remove('hidden')}; reader.readAsDataURL(file);}
+function postHouse(){let title=document.getElementById('hTitle').value.trim();let loc=document.getElementById('hLoc').value.trim();let price=parseInt(document.getElementById('hPrice').value);let type=document.getElementById('hType').value;let contact=document.getElementById('hContact').value.trim()||users[curUser]?.phone||curUser;let imgUrl=document.getElementById('hImg').value.trim();let finalImg=uploadedBase64||imgUrl||"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800"; if(!title||!loc||!price){alert('Fill title, location, price');return} let isAdmin=ADMIN_EMAILS.includes(curUser); houses.unshift({id:Date.now(),title,location:loc,price,type,contact,owner:curUser,img:finalImg,approved:isAdmin,reviews:[]}); save();render();renderPending(); document.getElementById('hTitle').value='';document.getElementById('hLoc').value='';document.getElementById('hPrice').value='';document.getElementById('hImg').value='';document.getElementById('hFile').value='';document.getElementById('previewImg').classList.add('hidden');uploadedBase64=""; alert(isAdmin?'✅ Posted & Approved':'✅ Posted Pending');}
 function setFilter(f){filter=f;render()}
-function render(){
- let q=document.getElementById('q').value.toLowerCase();
- let list=houses.filter(h=>{if(!h.approved&&!ADMIN_EMAILS.includes(curUser)) return false; let s=!q||h.title.toLowerCase().includes(q)||h.location.toLowerCase().includes(q); let t=filter==='All'||h.type===filter; return s&&t;});
- document.getElementById('housesGrid').innerHTML=list.map(h=>{
-  let avg=h.reviews?.length? (h.reviews.reduce((a,b)=>a+b.rating,0)/h.reviews.length).toFixed(1):'New';
-  let stars='★'.repeat(Math.round(avg))||'☆';
-  return `<div class="house-card">
-   <img src="${h.img}" onclick="openModal(${h.id})">
-   <div style="padding:14px">
-    <div style="display:flex;justify-content:space-between"><span class="badge ${h.approved?'badge-approved':'badge-pending'}">${h.approved?'APPROVED':'PENDING'}</span><span class="badge badge-type">${h.type}</span></div>
-    <h3 style="margin:8px 0">${h.title}</h3><div style="color:#94a3b8;font-size:13px">📍 ${h.location}</div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin:6px 0"><span class="price">KSh ${h.price.toLocaleString()}</span><span class="stars">${stars} ${avg}</span></div>
-    <div class="grid2">
-     <a href="tel:${h.contact}" style="text-decoration:none"><button class="btn btn-primary" style="width:100%">📞 Call</button></a>
-     <a href="https://wa.me/254${h.contact.slice(-9)}?text=Hi, interested in ${encodeURIComponent(h.title)} at ${encodeURIComponent(h.location)}" target="_blank" style="text-decoration:none"><button class="btn btn-whatsapp" style="width:100%">💬 WhatsApp</button></a>
-    </div>
-    <div class="grid2" style="margin-top:6px">
-     <button class="btn btn-ghost" style="width:100%" onclick="openModal(${h.id})">👁️ Details & Reviews</button>
-     <button class="btn btn-green" style="width:100%" onclick="mpesaPay(${h.id})">💰 M-Pesa Pay</button>
-    </div>
-    ${h.owner===curUser?`<button class="btn btn-ghost" style="width:100%;margin-top:8px;color:#ef4444" onclick="delHouse(${h.id})">Delete</button>`:''}
-   </div></div>`
- }).join('')||'<div class="card" style="text-align:center;color:#94a3b8">No houses</div>';
-}
-
-function renderPending(){
- if(!ADMIN_EMAILS.includes(curUser)) return;
- let pend=houses.filter(h=>!h.approved);
- document.getElementById('pendingList').innerHTML=pend.map(h=>`<div class="review" style="display:flex;justify-content:space-between;align-items:center"><div><b>${h.title}</b><br><small>${h.location} - KSh ${h.price} by ${h.owner}</small></div><div><button class="btn btn-green" style="padding:6px 12px" onclick="approve(${h.id})">Approve</button> <button class="btn btn-ghost" style="padding:6px;color:#ef4444" onclick="delHouse(${h.id})">Reject</button></div></div>`).join('')||'<p style="color:#94a3b8;font-size:12px">No pending</p>';
-}
+function render(){let q=document.getElementById('q').value.toLowerCase(); let list=houses.filter(h=>{if(!h.approved&&!ADMIN_EMAILS.includes(curUser)) return false; let s=!q||h.title.toLowerCase().includes(q)||h.location.toLowerCase().includes(q); let t=filter==='All'||h.type===filter; return s&&t;}); document.getElementById('housesGrid').innerHTML=list.map(h=>{let avg=h.reviews?.length? (h.reviews.reduce((a,b)=>a+b.rating,0)/h.reviews.length).toFixed(1):'New'; let stars='★'.repeat(Math.round(avg))||'☆'; return `<div class="house-card"><img src="${h.img}" onclick="openModal(${h.id})"><div style="padding:14px"><div style="display:flex;justify-content:space-between"><span class="badge ${h.approved?'badge-approved':'badge-pending'}">${h.approved?'APPROVED':'PENDING'}</span><span class="badge badge-type">${h.type}</span></div><h3 style="margin:8px 0">${h.title}</h3><div style="color:#94a3b8;font-size:13px">📍 ${h.location}</div><div style="display:flex;justify-content:space-between;margin:6px 0"><span class="price">KSh ${h.price.toLocaleString()}</span><span class="stars">${stars} ${avg}</span></div><div class="grid2"><a href="tel:${h.contact}" style="text-decoration:none"><button class="btn btn-primary" style="width:100%">📞 Call</button></a><a href="https://wa.me/254${h.contact.slice(-9)}?text=Hi, interested in ${encodeURIComponent(h.title)}" target="_blank" style="text-decoration:none"><button class="btn btn-whatsapp" style="width:100%">💬 WhatsApp</button></a></div><div class="grid2" style="margin-top:6px"><button class="btn btn-ghost" style="width:100%" onclick="openModal(${h.id})">👁️ Details</button><button class="btn btn-green" style="width:100%" onclick="mpesaPay(${h.id})">💰 M-Pesa</button></div>${h.owner===curUser?`<button class="btn btn-ghost" style="width:100%;margin-top:8px;color:#ef4444" onclick="delHouse(${h.id})">Delete</button>`:''}</div></div>`}).join('')||'<div class="card" style="text-align:center;color:#94a3b8">No houses</div>';}
+function renderPending(){if(!ADMIN_EMAILS.includes(curUser)) return; let pend=houses.filter(h=>!h.approved); document.getElementById('pendingList').innerHTML=pend.map(h=>`<div class="review" style="display:flex;justify-content:space-between"><div><b>${h.title}</b><br><small>${h.location} - ${h.owner}</small></div><div><button class="btn btn-green" style="padding:6px" onclick="approve(${h.id})">Approve</button> <button class="btn btn-ghost" style="padding:6px;color:#ef4444" onclick="delHouse(${h.id})">Reject</button></div></div>`).join('')||'<p style="color:#94a3b8;font-size:12px">No pending</p>';}
 function approve(id){let h=houses.find(x=>x.id===id);if(h){h.approved=true;save();render();renderPending();}}
 function delHouse(id){if(confirm('Delete?')){houses=houses.filter(h=>h.id!==id);save();render();renderPending()}}
-
-function openModal(id){
- let h=houses.find(x=>x.id===id); if(!h) return;
- let avg=h.reviews?.length? (h.reviews.reduce((a,b)=>a+b.rating,0)/h.reviews.length).toFixed(1):'No reviews';
- let html=`
-  <img src="${h.img}" style="width:100%;height:220px;object-fit:cover;border-radius:12px">
-  <h2>${h.title}</h2><p style="color:#94a3b8">📍 ${h.location}</p>
-  <div class="price">KSh ${h.price.toLocaleString()} / month - ${h.type}</div>
-  <div class="grid2" style="margin:12px 0">
-   <a href="tel:${h.contact}"><button class="btn btn-primary" style="width:100%">📞 Call ${h.contact}</button></a>
-   <a href="https://wa.me/254${h.contact.slice(-9)}?text=Hi, ${encodeURIComponent(h.title)}" target="_blank"><button class="btn btn-whatsapp" style="width:100%">💬 WhatsApp</button></a>
-  </div>
-  <button class="btn btn-green" style="width:100%" onclick="mpesaPay(${h.id})">💰 M-Pesa Pay KSh ${h.price} to Till ${mpesaSettings.shortcode||'123456'}</button>
-  <div style="margin-top:16px;border-top:1px solid #334155;padding-top:12px">
-   <h3>⭐ Reviews (${h.reviews.length}) - Avg ${avg}</h3>
-   <div id="revList">${h.reviews.map(r=>`<div class="review"><b>${r.user}</b> <span class="stars">${'★'.repeat(r.rating)}</span><br>${r.text}</div>`).join('')||'<p style="color:#94a3b8">No reviews yet, be first!</p>'}</div>
-   <h4>Add Review</h4>
-   <select id="revRating" class="input"><option value="5">5 ★ Excellent</option><option value="4">4 ★ Good</option><option value="3">3 ★ Average</option><option value="2">2 ★ Poor</option><option value="1">1 ★ Bad</option></select>
-   <input id="revText" class="input" placeholder="Your review e.g. Nice house, water available">
-   <button class="btn btn-primary" onclick="addReview(${h.id})">Post Review</button>
-  </div>`;
- document.getElementById('modalContent').innerHTML=html; document.getElementById('modal').classList.remove('hidden');
-}
+function openModal(id){let h=houses.find(x=>x.id===id); if(!h) return; let avg=h.reviews?.length? (h.reviews.reduce((a,b)=>a+b.rating,0)/h.reviews.length).toFixed(1):'No reviews'; let html=`<img src="${h.img}" style="width:100%;height:220px;object-fit:cover;border-radius:12px"><h2>${h.title}</h2><p style="color:#94a3b8">📍 ${h.location}</p><div class="price">KSh ${h.price.toLocaleString()}</div><div class="grid2" style="margin:12px 0"><a href="tel:${h.contact}"><button class="btn btn-primary" style="width:100%">📞 Call</button></a><a href="https://wa.me/254${h.contact.slice(-9)}?text=Hi, ${encodeURIComponent(h.title)}" target="_blank"><button class="btn btn-whatsapp" style="width:100%">💬 WhatsApp</button></a></div><button class="btn btn-green" style="width:100%" onclick="mpesaPay(${h.id})">💰 M-Pesa Pay</button><div style="margin-top:16px;border-top:1px solid #334155;padding-top:12px"><h3>⭐ Reviews (${h.reviews.length}) - ${avg}</h3><div>${h.reviews.map(r=>`<div class="review"><b>${r.user}</b> <span class="stars">${'★'.repeat(r.rating)}</span><br>${r.text}</div>`).join('')||'<p style="color:#94a3b8">No reviews</p>'}</div><select id="revRating" class="input"><option value="5">5 ★ Excellent</option><option value="4">4 ★ Good</option><option value="3">3 ★ Average</option><option value="2">2 ★ Poor</option><option value="1">1 ★ Bad</option></select><input id="revText" class="input" placeholder="Your review"><button class="btn btn-primary" onclick="addReview(${h.id})">Post Review</button></div>`; document.getElementById('modalContent').innerHTML=html; document.getElementById('modal').classList.remove('hidden');}
 function closeModal(){document.getElementById('modal').classList.add('hidden')}
-function addReview(id){
- let h=houses.find(x=>x.id===id); let rating=parseInt(document.getElementById('revRating').value); let text=document.getElementById('revText').value.trim(); if(!text){alert('Write review');return}
- h.reviews.push({user:curUser.split('@')[0],rating,text,date:Date.now()}); save(); openModal(id); render();
+function addReview(id){let h=houses.find(x=>x.id===id); let rating=parseInt(document.getElementById('revRating').value); let text=document.getElementById('revText').value.trim(); if(!text){alert('Write review');return} h.reviews.push({user:curUser.split('@')[0],rating,text,date:Date.now()}); save(); openModal(id); render();}
+function mpesaPay(id){let h=houses.find(x=>x.id===id); let phone=prompt('Enter M-Pesa phone:',users[curUser]?.phone||'07...'); if(!phone) return; alert(`🔔 STK Push Sent!\nTo: ${phone}\nAmount: KSh ${h.price}\nPaybill: ${mpesaSettings.shortcode}\nCheck phone`);}
+function saveMpesa(){mpesaSettings.shortcode=document.getElementById('mpesaShortcode').value; mpesaSettings.key=document.getElementById('mpesaKey').value; mpesaSettings.secret=document.getElementById('mpesaSecret').value; save(); document.getElementById('mpesaStatus').innerText='✅ Saved Till '+mpesaSettings.shortcode;}
+
+function checkAutoLogin(){
+ const params=new URLSearchParams(window.location.search);
+ const auto=params.get('admin')||params.get('login');
+ if(auto){
+   let email=auto.trim().toLowerCase();
+   if(users[email]){localStorage.setItem('tk_cur',email); curUser=email; showApp(); return true;}
+ }
+ if(curUser&&users[curUser]) showApp();
 }
-function mpesaPay(id){
- let h=houses.find(x=>x.id===id);
- let phone=prompt('Enter M-Pesa phone to pay (07...):',users[curUser]?.phone||'07...');
- if(!phone) return;
- // DARAJA STK SIMULATION - REAL INTEGRATION READY
- alert(`🔔 M-Pesa STK Push Sent!\n\nTo: ${phone}\nAmount: KSh ${h.price}\nHouse: ${h.title}\nPaybill: ${mpesaSettings.shortcode}\n\nCheck your phone - Enter M-Pesa PIN to pay.\n\n[In production, this calls Daraja API: mpesa/stkpush with key ${mpesaSettings.shortcode}]`);
- // Real Daraja call would be: fetch('https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest', {method:'POST', headers:{Authorization:'Bearer '+token}, body:JSON.stringify({BusinessShortCode:mpesaSettings.shortcode, Amount:h.price, PartyA:phone, ...})})
-}
-function saveMpesa(){
- mpesaSettings.shortcode=document.getElementById('mpesaShortcode').value; mpesaSettings.key=document.getElementById('mpesaKey').value; mpesaSettings.secret=document.getElementById('mpesaSecret').value; save(); document.getElementById('mpesaStatus').innerText='✅ Saved! M-Pesa payments will use Till '+mpesaSettings.shortcode;
-}
-if(curUser&&users[curUser]) showApp();
+checkAutoLogin();
 </script>
 </body>
 </html>
